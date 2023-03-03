@@ -1,0 +1,77 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Scanner;
+public class Solution {
+	
+	public static void main(String[] args)  throws NumberFormatException, IOException{
+        /* Write Your Code Here
+		 * Complete the Rest of the Program
+		 * You have to take input and print the output yourself
+		 */
+         Scanner sc=new Scanner(System.in);
+        int v=sc.nextInt();
+		int e=sc.nextInt();
+		int[][]adjMatrix=new int[v][v];
+		for(int i=0; i<e; i++){
+			int sv=sc.nextInt();
+			int ev=sc.nextInt();
+			adjMatrix[sv][ev]=1;
+			adjMatrix[ev][sv]=1;
+		}
+		int s=sc.nextInt();  // source
+		int d=sc.nextInt();  // destination
+		ArrayList<Integer>list=Helper(adjMatrix,s,d);
+		if(list!=null){
+			for(int i=0; i<list.size(); i++){
+				System.out.print(list.get(i)+" ");
+			}
+		}
+	}
+   public static ArrayList<Integer>Helper(int[][]adjMatrix,int s,int d){
+   Queue<Integer> pendingVertices=new LinkedList<>();
+   pendingVertices.add(s);
+   boolean pathfound=false;
+
+   HashMap<Integer,Integer> map=new HashMap<>();
+  map.put(s, -1);   // (source,parent)
+  boolean[]visited=new boolean[adjMatrix.length];
+  visited[s]=true;
+
+   while(!pendingVertices.isEmpty()){
+	int  currentVertex=pendingVertices.poll();
+	   for(int i=0; i<adjMatrix.length; i++){    
+             if(adjMatrix[currentVertex][i]==1 && !visited[i]){
+              pendingVertices.add(i);
+			  visited[i]=true;
+			  map.put(i,currentVertex);
+			  if(i==d){
+				  pathfound=true;
+				  break;
+			  }
+			 }
+	   }
+       
+   }
+
+   if(pathfound){
+	   ArrayList<Integer> path=new ArrayList<>();
+	   int currentVertex=d;
+	   while(currentVertex!=-1){
+		   path.add(currentVertex);
+		   int parent=map.get(currentVertex);
+		   currentVertex=parent;
+	   }
+	   return path;
+   }
+   else{
+	   return null;
+   }
+
+   }
+
+}
