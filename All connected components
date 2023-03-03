@@ -1,0 +1,55 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.ArrayList;
+
+public class Solution {
+public static void help(int adjMatrix[][],boolean visited[],ArrayList<Integer> arr,int start){  
+        visited[start]=true;
+        arr.add(start);
+        int n=adjMatrix.length;   
+          for(int j=0;j<n;j++){
+              if(adjMatrix[start][j]==1&&!visited[j]){
+                 help(adjMatrix,visited,arr,j);          // when recursion is calling inside the loop then there is no need to base case
+              }
+          }
+    }
+    public static void helpp(int adjMatrix[][]){
+        boolean visited[]=new boolean[adjMatrix.length];
+        for(int i=0;i<adjMatrix.length;i++){
+          if(!visited[i]){
+              // this array list is creating again and again
+             ArrayList<Integer> list= new ArrayList<Integer>();
+             help(adjMatrix,visited,list,i);
+             Collections.sort(list);
+
+                
+	// print statement 			
+             for(int j=0;j<list.size();j++){
+                System.out.print(list.get(j)+" "); 
+                  }
+                       
+				System.out.println();         
+          }
+        }
+    }
+	public static void main(String[] args) throws NumberFormatException, IOException {
+
+	   	Scanner s = new Scanner(System.in);
+		int v = s.nextInt();
+		// total number of edges e
+		int e = s.nextInt();
+		int adjMatrix[][] = new int[v][v];
+		for (int i = 0; i < e; i++) {
+			int fv = s.nextInt();
+			int sv = s.nextInt();
+			adjMatrix[fv][sv] = 1;
+			adjMatrix[sv][fv] = 1;
+		}
+		helpp(adjMatrix); 
+	}
+}
