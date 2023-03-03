@@ -1,0 +1,69 @@
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Scanner;
+public class Solution {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+        
+        /* Write Your Code Here
+		 * Complete the Rest of the Program
+		 * You have to take input and print the output yourself
+		 */
+		 Scanner sc=new Scanner(System.in);
+		 int v=sc.nextInt();
+		 int e=sc.nextInt();
+		 int[][]adjMatrix=new int[v][v];
+		 boolean []visited=new boolean[v];
+
+		 for(int i=0; i<e; i++){
+			 int sv=sc.nextInt();   // starting vertex 
+			 int ev=sc.nextInt(); // ending vertex
+			 adjMatrix[sv][ev]=1;
+			 adjMatrix[ev][sv]=1;
+		 }
+		 int V1=sc.nextInt();    // vertex1
+		 int V2=sc.nextInt();   // vertex2
+
+   ArrayList<Integer> ans=dftraversal(adjMatrix,visited,V1,V2);
+      if(ans!=null){
+		  for(int i=0; i<ans.size(); i++){
+			  System.out.print(ans.get(i)+" ");
+		  }
+	  }
+	}
+
+   public static ArrayList<Integer> dftraversal(int[][]adjMatrix,boolean[]visited,int start,int end){
+     
+		if(start==end){
+	  ArrayList<Integer> list=new ArrayList<>(); 
+        list.add(start);
+		return list;
+		}
+		visited[start]=true;
+		for(int i=0; i<adjMatrix.length; i++){
+
+			if(!visited[i] && adjMatrix[start][i]==1){
+				ArrayList<Integer> list=dftraversal(adjMatrix, visited,i,end);
+				if(list!=null){
+				list.add(start);
+				return list;
+				}
+			}
+		}
+		return null;
+   }
+}
