@@ -1,0 +1,56 @@
+public class Solution {
+	
+	int solve(String[] Graph , int N, int M)
+	{
+		/* Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+	 	 * Taking input and printing output is handled automatically.
+        */
+          String s="CODINGNINJA";
+        boolean[][] visited=new boolean[N][M];
+        for(int i=0;i<N;i++){      // 0th index,,,,,,,
+            for(int j=0;j<M;j++){
+            if(Graph[i].charAt(j)=='C'){
+				if(dfs(Graph,visited,s.substring(1),i,j)){
+					return 1;
+				}
+			}
+            }
+        }
+	
+    return 0;
+	}	
+
+   public static boolean dfs(String[]Graph,boolean [][]visited,String s,int i,int j){
+	   if(s.length()==0){
+		   visited[i][j]=true;
+		   return true;
+	   }
+
+      visited[i][j]=true;
+      
+	  // trverse in 8 direction with the help of this
+	  int[]X_direc={1,1,0,-1,-1,-1,0,1};
+	  int[]y_direc={0,-1,-1,-1,0,1,1,1};
+
+
+	  for(int k=0; k<8; k++){
+		  int x=i+X_direc[k];
+		  int y=j+y_direc[k];
+     
+	 if(x>=0 && y>=0 && x<Graph.length && y<Graph[x].length() && Graph[x].charAt(y)==s.charAt(0) && !visited[x][y] ){
+		 if(dfs(Graph,visited,s.substring(1),x,y)){
+			 return true;
+		 }
+	 }
+
+	  }
+
+
+	  visited[i][j]=false;
+	  return false;
+
+   }
+}
